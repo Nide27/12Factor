@@ -1,0 +1,29 @@
+﻿version: '3.4'
+
+services:
+  weather-api:
+    image: nide27/weather-api 
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080:80
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+
+  weather-db:
+    container_name: weather-db
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - "5432:5432"
+    restart: always
+    volumes:
+      - weather_data:/var/lib/postgresql/data/
+
+volumes:
+  weather_data:

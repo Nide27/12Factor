@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace WeatherAPI;
 
@@ -6,17 +8,30 @@ namespace WeatherAPI;
 [Route("api/[controller]")]
 public class WeatherController
 {
-    [HttpGet]
-    public Dictionary<string, string> Get(IConfiguration configuration)
+    private readonly WeatherContext _context;
+    public WeatherController(WeatherContext weatherContext)
     {
-        Console.Write(configuration.GetValue<Dictionary<string, string>>("Weather"));
-
-        var weather = configuration.GetSection("Weather").Get<Dictionary<string, string>>();
+        _context = weatherContext;
+    }
+    
+    [HttpGet]
+    public async Task<IEnumerable<Weather>> Get()
+    {
+        var result =  await _context.WeatherData.ToListAsync();
         
-        if (weather.Count == 0)
+        if (result.Count == 0)
         {
-            Console.Write("No Weather data found");
+            Console.WriteLine("No weather data found");
+            Console.WriteLine("Check if table and entries exist!");
         }
-        return weather;
+
+        return result;
+    }
+    
+    [HttpPost]
+    public async void Create(string location, string temperature)
+    {
+        await _context.AddAsync(new Weather() {location = location, temperature = temperature });
+        _context.SaveChanges();
     }
 }
