@@ -2,10 +2,12 @@
 
 services:
   weather-api:
-    image: nide27/weather-api 
+    image: weather-api 
     build:
       context: .
       dockerfile: Dockerfile
+    depends_on: 
+      - weather-db
     ports:
       - 8080:80
     environment:
