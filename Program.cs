@@ -1,4 +1,3 @@
-//TO DO: DockerFile nimmt keine anderen appsettings; Pipeline testen bzw conditions setzen depends on, 
 using WeatherAPI;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
@@ -8,8 +7,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-
 
 var configuration = builder.Configuration;
 string connection = configuration.GetConnectionString("DefaultConnection");

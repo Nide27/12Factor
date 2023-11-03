@@ -21,8 +21,7 @@ public class WeatherController
         
         if (result.Count == 0)
         {
-            Console.WriteLine("No weather data found");
-            Console.WriteLine("Check if table and entries exist!");
+            Console.WriteLine("No weather data found!");
         }
 
         return result;
