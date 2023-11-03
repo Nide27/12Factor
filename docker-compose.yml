@@ -2,12 +2,13 @@
 
 services:
   weather-api:
-    image: weather-api 
+    image: nide27/weather-api:latest
     build:
       context: .
       dockerfile: Dockerfile
-    depends_on: 
+    depends_on:
       - weather-db
+    restart: on-failure
     ports:
       - 8080:80
     environment:
@@ -26,6 +27,6 @@ services:
     restart: always
     volumes:
       - weather_data:/var/lib/postgresql/data/
-
+  
 volumes:
   weather_data:
