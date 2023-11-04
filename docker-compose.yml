@@ -2,10 +2,7 @@
 
 services:
   weather-api:
-    image: nide27/weather-api:latest
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: nide27/weather-api:main
     depends_on:
       - weather-db
     restart: on-failure
